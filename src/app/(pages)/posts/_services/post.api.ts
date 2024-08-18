@@ -11,7 +11,6 @@ export type PostsQuery = {
   sortBy?: string,
   limit?: number,
   order?: OrderEnum,
-  select?: string[],
 }
 
 export type SearchPosts = PostsQuery & {

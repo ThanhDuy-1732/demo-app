@@ -1,6 +1,6 @@
 'use client';
 // Utilities
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 
@@ -46,6 +46,11 @@ export default function PostLayout({
       }
   
       await getPosts(query);
+
+      const searchParams = new URLSearchParams();
+      Object.entries(query).forEach(([key, value]) => searchParams.set(key, value.toString()));
+
+      router.replace(`${pathName}?${searchParams}`);
     } catch (error: any) {
       setMessage({
         message: error.message,

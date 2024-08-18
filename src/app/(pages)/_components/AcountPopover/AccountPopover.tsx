@@ -26,7 +26,7 @@ const AvatarImage: React.FC<PropsWithChildren<AvatarImageProps>> = ({ url }) => 
     if (url) {
       setAvatarProps({
         ...props,
-        src: <img alt="Avatar" src={url} />,
+        src: <Image alt="Avatar" src={url} height={50} width={50} />,
       })
       return;
     }

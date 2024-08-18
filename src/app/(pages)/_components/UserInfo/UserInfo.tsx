@@ -1,7 +1,7 @@
 // Utilities
 import Link from "next/link";
-import { PropsWithChildren, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { PropsWithChildren, useCallback, useMemo } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 // Components
 import { Button, Image, Modal } from "antd";
@@ -19,7 +19,10 @@ type UserInfoProps = {
 
 const UserInfo: React.FC<PropsWithChildren<UserInfoProps>> = ({ showSearch, search }) => {
   const router = useRouter();
+  const params = useSearchParams();
   const signOut = useAuthStore((state) => state.signOut);
+
+  const defaultSearchValues = useMemo(() => params.get('keyword') || '', []);
 
   const handleSearchPosts = useCallback(async (keyword: string) => {
     search?.(keyword);
@@ -51,7 +54,7 @@ const UserInfo: React.FC<PropsWithChildren<UserInfoProps>> = ({ showSearch, sear
         <div className="flex-2 lg:flex-1 ml-2 lg:ml-0 w-full">
           {
             showSearch &&
-            <InputSearch submit={handleSearchPosts} />
+            <InputSearch submit={handleSearchPosts} defaultValue={defaultSearchValues} />
           }
         </div>
         <div className="flex-1 flex justify-end items-center gap-2">

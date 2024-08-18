@@ -14,8 +14,12 @@ import useAlertStore, { MessageType } from "@/components/Alert/services/alert.st
 
 // APIs
 import { OrderEnum, PostsData, SearchPosts } from "./_services/post.api";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const Posts: React.FC = () => {
+  const pathName = usePathname();
+  const router = useRouter();
+  const param = useSearchParams();
   const posts = usePostStore((state) => state.posts);
   const filter = usePostStore((state) => state.filter);
   const getPosts = usePostStore((state) => state.getPosts);
@@ -32,6 +36,11 @@ const Posts: React.FC = () => {
       }
 
       await getPosts(query);
+
+      const searchParams = new URLSearchParams();
+      Object.entries(query).forEach(([key, value]) => searchParams.set(key, value.toString()));
+
+      router.replace(`${pathName}?${searchParams}`);
     } catch (error: any) {
       setMessage({
         message: error.message,
@@ -43,7 +52,9 @@ const Posts: React.FC = () => {
   }, [setLoading, getPosts, setMessage]);
 
   useEffect(() => {
-    getData();
+    const query: any = {};
+    (param.entries() || []).forEach(([key, value]) => query[key as string] = value);
+    getData(query);
   }, [getData]);
 
   const handleSearch = useCallback((sortBy: string, order: OrderEnum) => {
