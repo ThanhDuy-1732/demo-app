@@ -1,4 +1,7 @@
+// Utilities
 import { create } from "zustand";
+
+// APIs
 import { AuthAPI, MeData, SignInPayload } from "./auth.http";
 
 type AuthState = {

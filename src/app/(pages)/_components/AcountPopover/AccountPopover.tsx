@@ -1,16 +1,23 @@
-import { MeData } from "@/app/(auth)/_services/auth.http";
-import useAuthStore from "@/app/(auth)/_services/auth.store"
-import { Avatar, Popover, Space, Button } from "antd"
-import { PropsWithChildren, ReactNode, useCallback, useEffect, useState } from "react";
-import { UserOutlined } from '@ant-design/icons';
-import { AvatarSize } from "antd/es/avatar/AvatarContext";
-import Image from "next/image";
+// Utilities
 import { useRouter } from "next/navigation";
+import { PropsWithChildren, ReactNode, useCallback, useEffect, useState } from "react";
+
+// APIs
+import { MeData } from "@/app/(auth)/_services/auth.http";
+
+// Stores
+import useAuthStore from "@/app/(auth)/_services/auth.store"
+
+// Components
+import Image from "next/image";
+import { UserOutlined } from '@ant-design/icons';
+import { Avatar, Popover, Space, Button } from "antd"
+import { AvatarSize } from "antd/es/avatar/AvatarContext";
 
 type AvatarProps = {
+  src?: ReactNode,
   size: AvatarSize,
   icon?: ReactNode,
-  src?: ReactNode,
 }
 
 type AvatarImageProps = {
@@ -18,7 +25,7 @@ type AvatarImageProps = {
 }
 
 const AvatarImage: React.FC<PropsWithChildren<AvatarImageProps>> = ({ url }) => {
-  const [ avatarProps, setAvatarProps ] = useState<AvatarProps | {}>({});
+  const [avatarProps, setAvatarProps] = useState<AvatarProps | {}>({});
 
   useEffect(() => {
     const props = { size: 'large' };

@@ -1,12 +1,21 @@
 'use client';
+// Utilities
 import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
+
+// Stores
 import usePostStore from "../_services/post.store";
-import useLoadingStore from "@/components/Loading/services/loading.store";
 import useAlertStore from "@/components/Alert/services/alert.store";
+import useLoadingStore from "@/components/Loading/services/loading.store";
+
+// Components
 import { Skeleton } from "antd";
+import Detail from '@/app/(pages)/_components/PostDetail/PostDetail';
+
+// APIs
 import { CommentsData, PostData } from "../_services/post.api";
 import CommonAPI, { UserData } from "@/services/http/common.http";
-import Detail from '@/app/(pages)/_components/PostDetail/PostDetail';
+
+// Constants
 import { DEFAULT_LIMIT_PAGE, DEFAULT_SKIP_PAGE } from "@/services/constants";
 
 type PostDetailProps = {
@@ -16,6 +25,7 @@ type PostDetailProps = {
 }
 
 const PostDetail: React.FC<PropsWithChildren<PostDetailProps>> = ({ params }) => {
+  const id = useMemo(() => params.id, [params]);
   const [user, setUser] = useState<UserData | {}>({});
   const getPost = usePostStore((state) => state.getPost);
   const setMessage = useAlertStore((state) => state.addMessage);
@@ -23,8 +33,6 @@ const PostDetail: React.FC<PropsWithChildren<PostDetailProps>> = ({ params }) =>
   const post: PostData = usePostStore((state) => state.post as PostData);
   const getCommentsByPost = usePostStore((state) => state.getCommentsByPost);
   const comments: CommentsData = usePostStore((state) => state.comments as CommentsData);
-
-  const id = useMemo(() => params.id, [params]);
 
   const getUserByPost = useCallback(() => {
     if (!post?.userId) {

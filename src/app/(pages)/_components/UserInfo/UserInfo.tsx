@@ -45,9 +45,9 @@ const UserInfo: React.FC<PropsWithChildren<UserInfoProps>> = ({ showSearch, sear
         <div className="flex-1 lg:flex items-center hidden">
           <Link href={'/posts'} className="w-fit h-[50px]">
             <Image
-              src="https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/272914268_312242084295213_8945579943894417114_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=JGibI2NxiVoQ7kNvgH3IeMw&_nc_ht=scontent.fsgn5-9.fna&oh=00_AYAoL52cQnn5kV4zQ9SZZXW2PkA6enPUi638ZJ-rsHSkIA&oe=66C62DF1" 
               height={50}
               preview={false}
+              src="https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/272914268_312242084295213_8945579943894417114_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=JGibI2NxiVoQ7kNvgH3IeMw&_nc_ht=scontent.fsgn5-9.fna&oh=00_AYAoL52cQnn5kV4zQ9SZZXW2PkA6enPUi638ZJ-rsHSkIA&oe=66C62DF1" 
             />
           </Link>
         </div>

@@ -9,8 +9,8 @@ import { Pagination, PaginationProps } from "antd";
 import { DEFAULT_LIMIT_PAGE } from "@/services/constants";
 
 export type PaginationCustomProps = {
-  total: number,
   skip: number,
+  total: number,
   limit: number,
   changePage: ({ limit, skip }: { limit: number, skip: number }) => Promise<void> | void,
 }
@@ -43,8 +43,8 @@ const PaginationCustom: React.FC<PropsWithChildren<PaginationCustomProps>> = ({ 
         total > DEFAULT_LIMIT_PAGE ?
         <Pagination 
           total={total} 
-          showSizeChanger={false}
           showQuickJumper 
+          showSizeChanger={false}
           defaultCurrent={defaultCurrent} 
           onChange={handleChangePageClick}
           showTotal={(total) => (<TotalItem total={total} />)} 

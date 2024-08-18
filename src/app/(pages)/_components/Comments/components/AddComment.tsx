@@ -1,7 +1,12 @@
 'use client';
-import useAlertStore, { MessageType } from "@/components/Alert/services/alert.store";
-import { Button, Form, Input } from "antd";
+// Utilities
 import { useCallback, useMemo } from "react";
+
+// Stores
+import useAlertStore, { MessageType } from "@/components/Alert/services/alert.store";
+
+// Components
+import { Button, Form, Input } from "antd";
 
 type CommentValues = {
   content: string;
@@ -14,7 +19,6 @@ const AddComment: React.FC = () => {
   const hasContent: boolean = useMemo(() => !!values?.content?.length, [values]);
 
   const handleAddCommentClick = useCallback(() => {
-    console.log('run here')
     setMessage({
       type: MessageType.warning,
       message: 'The feature is developing',

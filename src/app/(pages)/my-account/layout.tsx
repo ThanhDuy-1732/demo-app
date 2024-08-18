@@ -1,9 +1,15 @@
 'use client';
+// Utilities
+import { useEffect } from "react";
+
+// Stores
+import useAccountStore from "./_services/my-account.store";
 import useAuthStore from "@/app/(auth)/_services/auth.store";
+
 // Components
 import UserInfo from "../_components/UserInfo/UserInfo";
-import useAccountStore from "./_services/my-account.store";
-import { useEffect } from "react";
+
+// APIs
 import { MeData } from "@/app/(auth)/_services/auth.http";
 
 export default function AccountLayout({

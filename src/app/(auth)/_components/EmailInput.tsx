@@ -1,5 +1,5 @@
 // Utilities
-import React, { useMemo } from "react";
+import React from "react";
 
 // Components
 import { Form, Input } from "antd";
@@ -7,8 +7,8 @@ import { Form, Input } from "antd";
 const emailRule = () => {
   return [
     {
+      message: 'Email Invalid',
       pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      message: 'Email Invalid'
    }
   ]
 }
@@ -22,10 +22,10 @@ type EmailInputProps = {
 const EmailInput: React.FC<React.PropsWithChildren<EmailInputProps>> = ({ name, label, placeholder }) => {
   return (
     <Form.Item
-      label={label}
       name={name}
-      tooltip="Example: abcd@gmail.com"
+      label={label}
       rules={emailRule()}
+      tooltip="Example: abcd@gmail.com"
     >
       <Input placeholder={placeholder} />
     </Form.Item>

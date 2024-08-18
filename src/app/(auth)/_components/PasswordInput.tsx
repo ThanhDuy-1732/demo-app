@@ -48,10 +48,10 @@ type PasswordInputProps = {
 const PasswordInput: React.FC<React.PropsWithChildren<PasswordInputProps>> = ({ name, label, placeholder }) => {
   return (
     <Form.Item
-      label={label}
       name={name}
-      tooltip={<TooltipPassword />}
+      label={label}
       rules={passwordRule()}
+      tooltip={<TooltipPassword />}
     >
       <Input.Password placeholder={placeholder} />
     </Form.Item>

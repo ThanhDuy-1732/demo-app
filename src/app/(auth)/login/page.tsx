@@ -2,6 +2,7 @@
 // Utilities
 import Link from 'next/link'
 import React, { useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 
 // Components
 import Title from '../_components/Title';
@@ -16,7 +17,6 @@ import useAlertStore, { MessageType } from '@/components/Alert/services/alert.st
 
 // APIs
 import { SignInPayload } from '../_services/auth.http';
-import { useRouter } from 'next/navigation';
 
 type FormValues = {
   username: string,
@@ -34,9 +34,9 @@ export default function Login() {
     try {
       setLoading(true);
       const payload: SignInPayload = {
+        expiresInMins: 1440,
         username: values.username,
         password: values.password,
-        expiresInMins: 1440,
       };
 
       await signIn(payload);

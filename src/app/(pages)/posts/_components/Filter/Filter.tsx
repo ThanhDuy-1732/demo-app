@@ -1,8 +1,15 @@
 'use client';
-import { Button, Form, Select } from "antd";
+// Utilities
 import { PropsWithChildren, useCallback, useEffect, useMemo } from "react";
-import { OrderEnum, SearchPosts } from "../../_services/post.api";
+
+// Components
+import { Button, Form, Select } from "antd";
 import { SearchOutlined } from '@ant-design/icons';
+
+// APIs
+import { OrderEnum, SearchPosts } from "../../_services/post.api";
+
+// Stores
 import usePostStore from "../../_services/post.store";
 
 export type Options = {
@@ -20,10 +27,9 @@ export type FilterProps = {
 }
 
 const Filter: React.FC<PropsWithChildren<FilterProps>> = ({ search }) => {
-  const filter: SearchPosts = usePostStore((state) => state.filter);
   const [form] = Form.useForm();
   const values: FormValues = Form.useWatch([], form);
-
+  const filter: SearchPosts = usePostStore((state) => state.filter);
   const initValues: FormValues = useMemo(() => ({ sortBy: filter.sortBy || '', order: filter.order || OrderEnum.ASC  }), [filter]);
 
   useEffect(() => {
@@ -61,26 +67,25 @@ const Filter: React.FC<PropsWithChildren<FilterProps>> = ({ search }) => {
       <Form
         form={form}
         name='filter'
-        className="flex gap-2 mx-2"
         initialValues={initValues}
+        className="flex gap-2 mx-2"
         onFinish={handleSearchClick}
       >
         <Form.Item name="sortBy">
           <Select
             showSearch
             allowClear
-            style={{ width: '200px' }}
-            placeholder="Select type"
             options={optionsFilter}
+            placeholder="Select type"
+            style={{ width: '200px' }}
           />
         </Form.Item>
         <Form.Item name="order">
           <Select 
             showSearch
             allowClear
-            defaultValue={OrderEnum.ASC}
-            style={{ width: '100px' }}
             options={optionsOrder}
+            style={{ width: '100px' }}
           />
         </Form.Item>
         <Form.Item>

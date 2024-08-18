@@ -1,9 +1,16 @@
 'use client';
-import { MeData } from "@/app/(auth)/_services/auth.http";
-import useAuthStore from "@/app/(auth)/_services/auth.store";
-import { Avatar, Button, Modal, Skeleton } from "antd";
+// Utilities
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
+
+// APIs
+import { MeData } from "@/app/(auth)/_services/auth.http";
+
+// Stores
+import useAuthStore from "@/app/(auth)/_services/auth.store";
+
+// Components
+import { Avatar, Button, Modal, Skeleton } from "antd";
 
 export type Data = {
   name: string,

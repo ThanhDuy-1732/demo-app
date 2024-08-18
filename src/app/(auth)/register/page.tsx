@@ -60,7 +60,6 @@ export default function Register() {
   }, []);
 
   const handleRegisterClick = useCallback(() => {
-    console.log('run here')
     setMessage({
       type: MessageType.warning,
       message: 'The feature is developing',

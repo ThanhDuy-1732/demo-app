@@ -1,5 +1,6 @@
-import { http } from "@/services/http/http"
+// Utilities
 import { AxiosResponse } from "axios"
+import { http } from "@/services/http/http"
 
 export enum OrderEnum {
   ASC = 'asc',
@@ -8,10 +9,9 @@ export enum OrderEnum {
 
 export type PostsQuery = {
   skip?: number,
-  sortBy?: string,
   limit?: number,
+  sortBy?: string,
   order?: OrderEnum,
-  select?: string[],
 }
 
 export type PostsData = PaginationResponseType<{
@@ -20,8 +20,8 @@ export type PostsData = PaginationResponseType<{
 
 export type PostData = {
   id: number,
-  title: string,
   body: string,
+  title: string,
   tags: string[],
   reactions: {
     likes: number,

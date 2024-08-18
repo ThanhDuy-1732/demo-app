@@ -3,17 +3,17 @@
 import { useCallback, useEffect } from "react";
 
 // Components
+import { Skeleton } from "antd";
+import ListPost from "../../_components/ListPosts/ListPosts";
 
 // Stores
+import useAccountStore from "../_services/my-account.store";
 import useLoadingStore from "@/components/Loading/services/loading.store";
 import useAlertStore, { MessageType } from "@/components/Alert/services/alert.store";
 
 // APIs
-import { Skeleton } from "antd";
-import useAccountStore from "../_services/my-account.store";
-import { SearchPosts } from "../../posts/_services/post.api";
 import { PostsData } from "../_services/my-account.api";
-import ListPost from "../../_components/ListPosts/ListPosts";
+import { SearchPosts } from "../../posts/_services/post.api";
 
 const MyPosts: React.FC = () => {
   const posts = useAccountStore((state) => state.posts);

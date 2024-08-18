@@ -1,5 +1,10 @@
+// Utilities
 import { PropsWithChildren, useCallback, useMemo } from "react";
-import { PostsData, SearchPosts } from "../../posts/_services/post.api";
+
+// APIs
+import { PostsData } from "../../posts/_services/post.api";
+
+// Components
 import Content from "../Post/Post";
 import PaginationCustom from "../Pagination/Pagination";
 
@@ -32,7 +37,12 @@ const ListPost: React.FC<PropsWithChildren<ListPostProps>> = ({ data, search, go
           }
         </div>
         <div className="self-end">
-          <PaginationCustom limit={data.limit} total={data.total} skip={data.skip} changePage={handleChangePage} />
+          <PaginationCustom 
+            skip={data.skip} 
+            limit={data.limit} 
+            total={data.total} 
+            changePage={handleChangePage}
+          />
         </div>
       </div>
     </>

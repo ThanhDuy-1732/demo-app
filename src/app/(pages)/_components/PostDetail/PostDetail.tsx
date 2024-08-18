@@ -1,13 +1,20 @@
 'use client';
-import { CommentsData, PostData } from "../../posts/_services/post.api";
-import { PropsWithChildren, ReactNode, useCallback } from "react";
-import { Avatar, Badge, Button, Skeleton, Tag } from "antd";
-import { LeftOutlined } from '@ant-design/icons';
+// Utilities
 import { useRouter } from "next/navigation";
+import { PropsWithChildren, ReactNode, useCallback } from "react";
+
+// APIs
 import { UserData } from "@/services/http/common.http";
-import useAuthStore from "@/app/(auth)/_services/auth.store";
-import { LikeOutlined, DislikeOutlined, EyeOutlined } from '@ant-design/icons';
+import { CommentsData, PostData } from "../../posts/_services/post.api";
+
+// Components
 import Comments from "../Comments/Comments";
+import { LeftOutlined } from '@ant-design/icons';
+import { Avatar, Badge, Button, Skeleton, Tag } from "antd";
+import { LikeOutlined, DislikeOutlined, EyeOutlined } from '@ant-design/icons';
+
+// Stores
+import useAuthStore from "@/app/(auth)/_services/auth.store";
 import useAlertStore, { MessageType } from "@/components/Alert/services/alert.store";
 
 export type PostDetailProps = {

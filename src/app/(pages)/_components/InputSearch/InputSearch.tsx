@@ -1,5 +1,8 @@
-import { GetProps, Input } from "antd";
+// Utilities
 import { PropsWithChildren, useCallback } from "react";
+
+// Components
+import { GetProps, Input } from "antd";
 
 type InputSearchProps = {
   defaultValue?: string,

@@ -1,9 +1,16 @@
-import { PropsWithChildren, useMemo } from "react";
-import { PostData } from "../../posts/_services/post.api";
-import { Button, Tag } from "antd";
-import { formatNumber } from "@/services/libs";
-import { EyeOutlined, ArrowRightOutlined, LikeOutlined } from '@ant-design/icons';
+// Utilities
 import Link from "next/link";
+import { formatNumber } from "@/services/libs";
+import { PropsWithChildren, useMemo } from "react";
+
+// APIs
+import { PostData } from "../../posts/_services/post.api";
+
+// Components
+import { Button, Tag } from "antd";
+import { EyeOutlined, ArrowRightOutlined, LikeOutlined } from '@ant-design/icons';
+
+// Stores
 import useAuthStore from "@/app/(auth)/_services/auth.store";
 
 export type PostProps = {

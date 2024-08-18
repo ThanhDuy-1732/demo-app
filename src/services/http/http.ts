@@ -1,3 +1,4 @@
+// Utilities
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 
 export const http = (): AxiosInstance => {

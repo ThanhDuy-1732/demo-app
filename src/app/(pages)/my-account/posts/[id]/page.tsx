@@ -1,14 +1,23 @@
 'use client';
+// Utilities
 import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
-import useLoadingStore from "@/components/Loading/services/loading.store";
-import useAlertStore from "@/components/Alert/services/alert.store";
-import { Skeleton } from "antd";
-import CommonAPI, { UserData } from "@/services/http/common.http";
-import Detail from '@/app/(pages)/_components/PostDetail/PostDetail';
-import { DEFAULT_LIMIT_PAGE, DEFAULT_SKIP_PAGE } from "@/services/constants";
+
+// Stores
 import useAccountStore from "../../_services/my-account.store";
+import useAlertStore from "@/components/Alert/services/alert.store";
+import useLoadingStore from "@/components/Loading/services/loading.store";
+
+// Components
+import { Skeleton } from "antd";
+import Detail from '@/app/(pages)/_components/PostDetail/PostDetail';
+
+// APIs
 import { PostData } from "../../_services/my-account.api";
+import CommonAPI, { UserData } from "@/services/http/common.http";
 import { CommentsData } from "@/app/(pages)/posts/_services/post.api";
+
+// Constants
+import { DEFAULT_LIMIT_PAGE, DEFAULT_SKIP_PAGE } from "@/services/constants";
 
 type PostDetailProps = {
   params: {

@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 // Components
 import CustomAlert from "@/components/Alert/Alert";
 import Loading from "@/components/Loading/Loading";
+
+// Stores
 import useAlertStore from "@/components/Alert/services/alert.store";
 
 export default function AuthLayout({

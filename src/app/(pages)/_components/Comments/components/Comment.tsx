@@ -1,8 +1,15 @@
-import { CommentData } from "@/app/(pages)/posts/_services/post.api";
-import { Avatar, Badge, Button } from "antd";
+// Utilities
 import { PropsWithChildren, ReactNode, useCallback } from "react";
-import { LikeOutlined } from '@ant-design/icons';
+
+// APIs
+import { CommentData } from "@/app/(pages)/posts/_services/post.api";
+
+// Stores
 import useAlertStore, { MessageType } from "@/components/Alert/services/alert.store";
+
+// Components
+import { Avatar, Badge, Button } from "antd";
+import { LikeOutlined } from '@ant-design/icons';
 
 export const Action: React.FC<PropsWithChildren<{ count: number, icon: ReactNode }>> = ({ count, icon }) => {
   return (

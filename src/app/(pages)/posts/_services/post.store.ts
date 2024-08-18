@@ -1,5 +1,10 @@
+// Utilities
 import { create } from "zustand"
+
+// APIs
 import PostAPI, { CommentsData, CommentsQuery, PostData, PostsData, SearchPosts } from "./post.api"
+
+// Constants
 import { DEFAULT_LIMIT_PAGE, DEFAULT_SKIP_PAGE } from "@/services/constants"
 
 export type PostState = {

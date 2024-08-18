@@ -1,5 +1,10 @@
+// Utilities
 import { PropsWithChildren, useCallback } from "react";
+
+// APIs
 import { CommentsData } from "../../posts/_services/post.api";
+
+// Components
 import AddComment from "./components/AddComment";
 import ListComments from "./components/ListComment";
 import PaginationCustom from "../Pagination/Pagination";
@@ -12,7 +17,7 @@ export type CommentsProps = {
 const Comments: React.FC<PropsWithChildren<CommentsProps>> = ({ comments, getComment }) => {
   const handleChangePageComment = useCallback(({ limit, skip }: { limit: number, skip: number }) => {
     getComment({ limit, skip });
-  }, [])
+  }, []);
 
   return (
     <>

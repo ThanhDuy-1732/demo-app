@@ -17,8 +17,8 @@ import { OrderEnum, PostsData, SearchPosts } from "./_services/post.api";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const Posts: React.FC = () => {
-  const pathName = usePathname();
   const router = useRouter();
+  const pathName = usePathname();
   const param = useSearchParams();
   const posts = usePostStore((state) => state.posts);
   const filter = usePostStore((state) => state.filter);

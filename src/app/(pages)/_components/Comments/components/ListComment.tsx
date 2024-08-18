@@ -1,5 +1,10 @@
-import { CommentData, CommentsData } from "@/app/(pages)/posts/_services/post.api";
+// Utilities
 import { PropsWithChildren, useMemo } from "react";
+
+// APIs
+import { CommentData, CommentsData } from "@/app/(pages)/posts/_services/post.api";
+
+// Components
 import Comment from "./Comment";
 
 const ListComments: React.FC<PropsWithChildren<{ data: CommentsData }>> = ({ data }) => {

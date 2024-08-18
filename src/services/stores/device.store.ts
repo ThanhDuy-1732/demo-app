@@ -1,5 +1,6 @@
-import { v6 as uuidV6 } from 'uuid';
+// Utilities
 import { create } from "zustand"
+import { v6 as uuidV6 } from 'uuid';
 
 type DeviceState = {
   deviceId: string,

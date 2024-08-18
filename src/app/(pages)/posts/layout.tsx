@@ -1,6 +1,6 @@
 'use client';
 // Utilities
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 
@@ -18,15 +18,13 @@ import { SearchPosts } from "./_services/post.api";
 // Constants
 import { DEFAULT_LIMIT_PAGE, DEFAULT_SKIP_PAGE } from "@/services/constants";
 
-// Stores
-
 export default function PostLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const pathName = usePathname();
   const router = useRouter();
+  const pathName = usePathname();
   const getPosts = usePostStore((state) => state.getPosts);
   const setMessage = useAlertStore((state) => state.addMessage);
   const setLoading = useLoadingStore((state) => state.setLoading);

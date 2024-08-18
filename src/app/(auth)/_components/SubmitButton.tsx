@@ -1,9 +1,9 @@
 // Utilities
+import type { FormInstance } from 'antd';
 import { useState, useEffect } from 'react';
 
 // Components
 import { Button, Form } from 'antd';
-import type { FormInstance } from 'antd';
 
 interface SubmitButtonProps {
   form: FormInstance;
