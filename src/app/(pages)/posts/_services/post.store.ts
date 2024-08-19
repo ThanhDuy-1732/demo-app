@@ -16,6 +16,7 @@ export type PostState = {
 
 export type PostAction = {
   reset: () => void,
+  getFilter: () => PostState['filter'],
   getPost: (id: number) => Promise<void>,
   setPost: (post: PostState['post']) => void,
   setPosts: (posts: PostState['posts']) => void,
@@ -93,6 +94,8 @@ const usePostStore = create<PostState & PostAction>((set, get) => {
       total: Number(data.total || 0) + 1,
     })
   }
+
+  const getFilter = () => get().filter;
   
   return {
     post: {},
@@ -108,6 +111,7 @@ const usePostStore = create<PostState & PostAction>((set, get) => {
     getPost,
     setPosts,
     getPosts,
+    getFilter,
     setFilter,
     saveComment,
     setComments,

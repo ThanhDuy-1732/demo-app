@@ -1,6 +1,6 @@
 // Utilities
 import { formatNumber } from "@/services/libs";
-import { PropsWithChildren, useCallback, useMemo } from "react";
+import { PropsWithChildren, useCallback, useEffect, useMemo } from "react";
 
 // Components
 import { Pagination, PaginationProps } from "antd";
@@ -22,7 +22,7 @@ const TotalItem: React.FC<PropsWithChildren<{ total: number }>> = ({ total }) =>
 }
 
 const PaginationCustom: React.FC<PropsWithChildren<PaginationCustomProps>> = ({ total, limit, skip, changePage }) => {
-  const defaultCurrent: number = useMemo(() => {
+  const current: number = useMemo(() => {
     if (!limit) {
       return 1;
     }
@@ -44,8 +44,8 @@ const PaginationCustom: React.FC<PropsWithChildren<PaginationCustomProps>> = ({ 
         <Pagination 
           total={total} 
           showQuickJumper 
+          current={current}
           showSizeChanger={false}
-          defaultCurrent={defaultCurrent} 
           onChange={handleChangePageClick}
           showTotal={(total) => (<TotalItem total={total} />)} 
         /> :

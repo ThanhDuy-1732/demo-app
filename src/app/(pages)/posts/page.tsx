@@ -21,8 +21,8 @@ const Posts: React.FC = () => {
   const pathName = usePathname();
   const param = useSearchParams();
   const posts = usePostStore((state) => state.posts);
-  const filter = usePostStore((state) => state.filter);
   const getPosts = usePostStore((state) => state.getPosts);
+  const getFilter = usePostStore((state) => state.getFilter);
   const setMessage = useAlertStore((state) => state.addMessage);
   const setLoading = useLoadingStore((state) => state.setLoading);
 
@@ -31,7 +31,7 @@ const Posts: React.FC = () => {
       setLoading(true);
 
       const query = {
-        ...filter,
+        ...getFilter(),
         ...data,
       }
 
@@ -49,7 +49,7 @@ const Posts: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  }, [setLoading, getPosts, setMessage]);
+  }, [setLoading, getPosts, setMessage, getFilter]);
 
   const handleSearch = useCallback((sortBy: string, order: OrderEnum): void => {
     getData({

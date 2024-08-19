@@ -22,6 +22,7 @@ export type AccountAction = {
   reset: () => void,
   setUserId: (userId: number) => void,
   getPost: (id: number) => Promise<void>,
+  getFilter: () => AccountState['filter'],
   setPost: (post: AccountState['post']) => void,
   setPosts: (posts: AccountState['posts']) => void,
   setFilter: (filter: AccountState['filter']) => void,
@@ -101,6 +102,8 @@ const useAccountStore = create<AccountState & AccountAction>((set, get) => {
       total: Number(data.total || 0) + 1,
     })
   }
+
+  const getFilter = () => get().filter;
   
   return {
     post: {},
@@ -117,6 +120,7 @@ const useAccountStore = create<AccountState & AccountAction>((set, get) => {
     getPost,
     setPosts,
     getPosts,
+    getFilter,
     setUserId,
     setFilter,
     saveComment,

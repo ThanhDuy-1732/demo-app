@@ -17,9 +17,9 @@ import { SearchPosts } from "../../posts/_services/post.api";
 
 const MyPosts: React.FC = () => {
   const posts = useAccountStore((state) => state.posts);
-  const filter = useAccountStore((state) => state.filter);
   const userId = useAccountStore((state) => state.userId);
   const getPosts = useAccountStore((state) => state.getPosts);
+  const getFilter = useAccountStore((state) => state.getFilter);
   const setMessage = useAlertStore((state) => state.addMessage);
   const setLoading = useLoadingStore((state) => state.setLoading);
 
@@ -32,7 +32,7 @@ const MyPosts: React.FC = () => {
       }
 
       const query = {
-        ...filter,
+        ...getFilter(),
         ...data,
       }
 
@@ -45,7 +45,7 @@ const MyPosts: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  }, [setLoading, getPosts, setMessage, userId]);
+  }, [setLoading, getPosts, setMessage, userId, getFilter]);
 
   const handleChangePage = useCallback(({ limit, skip }: { limit: number, skip: number }): void => {
     getData({ limit, skip });
