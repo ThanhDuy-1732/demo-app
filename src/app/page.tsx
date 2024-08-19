@@ -7,7 +7,13 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push('/posts');
-  }, []);
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      router.push('/posts');
+      return;
+    }
+
+    router.push('/login');
+  }, [router]);
   return (<></>);
 }
