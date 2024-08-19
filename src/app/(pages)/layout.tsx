@@ -35,14 +35,14 @@ export default function PageLayout({
     } catch (error: any) {
       Modal.confirm({
         title: 'Warning!',
-        content: 'Please login first!',
+        content: 'Your session has expired. Please log in again!',
         onOk: redirectLogin,
         onCancel: redirectLogin,
       })
     } finally {
       setLoading(false);
     }
-  }, [setLoading, setMessage]);
+  }, [setLoading, getMe, redirectLogin]);
 
   useEffect(() => {
     try {
