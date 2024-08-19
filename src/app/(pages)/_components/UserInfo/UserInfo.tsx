@@ -1,5 +1,6 @@
 // Utilities
 import Link from "next/link";
+import { AxiosResponse } from "axios";
 import { PropsWithChildren, useCallback, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -11,6 +12,9 @@ import AccountPopover from "../AcountPopover/AccountPopover";
 
 // Stores
 import useAuthStore from "@/app/(auth)/_services/auth.store";
+
+// APIs
+import PostAPI, { SelectPostData } from "../../posts/_services/post.api";
 
 type UserInfoProps = {
   showSearch: boolean,
@@ -37,6 +41,18 @@ const UserInfo: React.FC<PropsWithChildren<UserInfoProps>> = ({ showSearch, sear
         signOut();
       }
     })
+  }, [router, signOut]);
+
+  const handleSearchOptions = useCallback(async (keyword: string) => {
+    try {
+      const api = new PostAPI();
+  
+      const response: AxiosResponse<SelectPostData<'title'>> = await api.getSelectValueWithKeyword(keyword, 'title');
+
+      return response.data?.posts?.map(post => post.title)
+    } catch (error) {
+      return [];
+    }
   }, []);
 
   return (
@@ -46,6 +62,7 @@ const UserInfo: React.FC<PropsWithChildren<UserInfoProps>> = ({ showSearch, sear
           <Link href={'/posts'} className="w-fit h-[50px]">
             <Image
               height={50}
+              alt="Avatar"
               preview={false}
               src="https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/272914268_312242084295213_8945579943894417114_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=JGibI2NxiVoQ7kNvgH3IeMw&_nc_ht=scontent.fsgn5-9.fna&oh=00_AYAoL52cQnn5kV4zQ9SZZXW2PkA6enPUi638ZJ-rsHSkIA&oe=66C62DF1" 
             />
@@ -54,7 +71,7 @@ const UserInfo: React.FC<PropsWithChildren<UserInfoProps>> = ({ showSearch, sear
         <div className="flex-2 lg:flex-1 ml-2 lg:ml-0 w-full">
           {
             showSearch &&
-            <InputSearch submit={handleSearchPosts} defaultValue={defaultSearchValues} />
+            <InputSearch submit={handleSearchPosts} defaultValue={defaultSearchValues} searchOption={handleSearchOptions} />
           }
         </div>
         <div className="flex-1 flex justify-end items-center gap-2">

@@ -66,6 +66,10 @@ export type CommentsData = PaginationResponseType<{
   comments: Array<CommentData>,
 }>
 
+export type SelectPostData<T extends keyof PostData> = PaginationResponseType<{
+  posts: Array<Pick<PostData, T>>,
+}>
+
 export default class PostAPI {
   async getPosts(query: PostsQuery): Promise<AxiosResponse<PostsData>> {
     return await http().get('/posts', {
@@ -88,5 +92,14 @@ export default class PostAPI {
 
   async getCommentByPost(id: number, query: CommentsQuery): Promise<AxiosResponse<CommentsData>> {
     return await http().get(`/comments/post/${id}`, { params: query });
+  }
+
+  async getSelectValueWithKeyword(keyword: string, select: keyof PostData): Promise<AxiosResponse<SelectPostData<keyof PostData>>> {
+    return await http().get('/posts/search', {
+      params: {
+        q: keyword,
+        select,
+      }
+    })
   }
 }
