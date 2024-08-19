@@ -18,7 +18,7 @@ const AddComment: React.FC<PropsWithChildren<AddCommentProps>> = ({ saveComment 
   const values: CommentValues = Form.useWatch([], form);
   const hasContent: boolean = useMemo(() => !!values?.content?.length, [values]);
 
-  const handleAddCommentClick = useCallback(() => {
+  const handleAddCommentClick = useCallback((): void => {
     saveComment(values.content);
     form.resetFields();
   }, [saveComment, values, form]);

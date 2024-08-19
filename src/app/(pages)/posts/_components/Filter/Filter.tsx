@@ -1,10 +1,10 @@
 'use client';
 // Utilities
-import { PropsWithChildren, useCallback, useEffect, useMemo } from "react";
+import { PropsWithChildren, ReactNode, useCallback, useEffect, useMemo } from "react";
 
 // Components
 import { Button, Form, Select } from "antd";
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined, ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 
 // APIs
 import { OrderEnum, SearchPosts } from "../../_services/post.api";
@@ -14,7 +14,7 @@ import usePostStore from "../../_services/post.store";
 
 export type Options = {
   value: string,
-  label: string,
+  label: string | ReactNode,
 }
 
 export type FormValues = {
@@ -31,11 +31,6 @@ const Filter: React.FC<PropsWithChildren<FilterProps>> = ({ search }) => {
   const values: FormValues = Form.useWatch([], form);
   const filter: SearchPosts = usePostStore((state) => state.filter);
   const initValues: FormValues = useMemo(() => ({ sortBy: filter.sortBy || '', order: filter.order || OrderEnum.ASC  }), [filter]);
-
-  useEffect(() => {
-    form.setFieldValue('sortBy', filter.sortBy);
-    form.setFieldValue('order', filter.order || OrderEnum.ASC);
-  }, [filter, form]);
 
   const handleSearchClick = useCallback(() => {
     search(values.sortBy, values.order);
@@ -55,12 +50,17 @@ const Filter: React.FC<PropsWithChildren<FilterProps>> = ({ search }) => {
 
   const optionsOrder: Array<Options> = [
     {
-      value: OrderEnum.ASC, label: 'A->Z',
+      value: OrderEnum.ASC, label: <ArrowUpOutlined />,
     },
     {
-      value: OrderEnum.DESC, label: 'Z->A',
+      value: OrderEnum.DESC, label: <ArrowDownOutlined />,
     }
   ]
+
+  useEffect(() => {
+    form.setFieldValue('sortBy', filter.sortBy);
+    form.setFieldValue('order', filter.order || OrderEnum.ASC);
+  }, [filter, form]);
 
   return (
     <>
@@ -85,7 +85,7 @@ const Filter: React.FC<PropsWithChildren<FilterProps>> = ({ search }) => {
             showSearch
             allowClear
             options={optionsOrder}
-            style={{ width: '100px' }}
+            style={{ width: '60px' }}
           />
         </Form.Item>
         <Form.Item>

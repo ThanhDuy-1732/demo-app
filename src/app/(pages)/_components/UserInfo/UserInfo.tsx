@@ -18,7 +18,7 @@ import PostAPI, { SelectPostData } from "../../posts/_services/post.api";
 
 type UserInfoProps = {
   showSearch: boolean,
-  search?: (keyword: string) => Promise<void>,
+  search?: (keyword: string) => void,
 }
 
 const UserInfo: React.FC<PropsWithChildren<UserInfoProps>> = ({ showSearch, search }) => {
@@ -26,13 +26,13 @@ const UserInfo: React.FC<PropsWithChildren<UserInfoProps>> = ({ showSearch, sear
   const params = useSearchParams();
   const signOut = useAuthStore((state) => state.signOut);
 
-  const defaultSearchValues = useMemo(() => params.get('keyword') || '', [params]);
+  const defaultSearchValues: string = useMemo(() => params.get('keyword') || '', [params]);
 
-  const handleSearchPosts = useCallback(async (keyword: string) => {
+  const handleSearchPosts = useCallback((keyword: string): void => {
     search?.(keyword);
   }, [search]);
 
-  const handleLogoutClick = useCallback(() => {
+  const handleLogoutClick = useCallback((): void => {
     Modal.confirm({
       title: 'Log out',
       content: 'Are you sure you want to log out?',
@@ -43,7 +43,7 @@ const UserInfo: React.FC<PropsWithChildren<UserInfoProps>> = ({ showSearch, sear
     })
   }, [router, signOut]);
 
-  const handleSearchOptions = useCallback(async (keyword: string) => {
+  const handleSearchOptions = useCallback(async (keyword: string): Promise<Array<string>> => {
     try {
       const api = new PostAPI();
   

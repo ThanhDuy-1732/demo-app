@@ -23,7 +23,7 @@ const ListComments: React.FC<PropsWithChildren<{ data: CommentsData }>> = ({ dat
           }
         </div> :
         <>
-          <div className="text-center border-2 rounded-xl border-gray-200 p-2">This post hasn't been comment yet!</div>
+          <div className="text-center border-2 rounded-xl border-gray-200 p-2">This post has not been comment yet!</div>
         </>
       }
     </>

@@ -27,7 +27,7 @@ const Comment: React.FC<PropsWithChildren<{ comment: CommentData }>> = ({ commen
       type: MessageType.warning,
       message: 'The feature is developing',
     })
-  }, []);
+  }, [setMessage]);
 
   return (
     <>

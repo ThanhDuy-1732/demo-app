@@ -48,46 +48,44 @@ const PostDetail: React.FC<PropsWithChildren<PostDetailProps>> = ({ params }) =>
 
   const id = useMemo(() => params.id, [params]);
 
-  const getUserByPost = useCallback(() => {
-    if (!post?.userId) {
-      return;
-    }
-
-    const commonAPI = new CommonAPI();
-    commonAPI.getUserById(post?.userId).then((response) => {
+  const getUserByPost = useCallback(async (): Promise<void> => {
+    try {
+      if (!post?.userId) {
+        return;
+      }
+  
+      const commonAPI = new CommonAPI();
+      const response = await commonAPI.getUserById(post?.userId);
       setUser(() => response.data);
-    }).catch((error: any) => {
+    } catch (error: any) {
       setMessage(error.message);
-    });
-  }, [post.userId]);
+    }
+  }, [post.userId, setMessage]);
 
-  const getCommentWithPageChange = useCallback(({ limit, skip }: { limit: number, skip: number }) => {
+  const getCommentWithPageChange = useCallback(({ limit, skip }: { limit: number, skip: number }): void => {
     setComments({
       limit,
       skip,
     })
   }, [setComments]);
 
-  const getComments = useCallback(({ limit, skip }: { limit: number, skip: number }) => {
-    getCommentsByPost(
-      Number(id), 
-      { skip, limit })
-  }, [getCommentsByPost])
-
   const getData = useCallback(async () => {
     try {
       setLoading(true);
       await getPost(Number(id));
-      getComments({
-        skip: DEFAULT_SKIP_PAGE,
-        limit: DEFAULT_LIMIT_PAGE,
-      })
+      getCommentsByPost(
+        Number(id), 
+        {
+          skip: DEFAULT_SKIP_PAGE,
+          limit: DEFAULT_LIMIT_PAGE,
+        }
+      )
     } catch (error: any) {
       setMessage(error.message);
     } finally {
       setLoading(false);
     }
-  }, [getPost, id, setLoading, setMessage]);
+  }, [getPost, id, setLoading, setMessage, getCommentsByPost]);
 
   const handleSaveComment = useCallback((content: string, postId: number) => {
     saveComment({
@@ -104,7 +102,7 @@ const PostDetail: React.FC<PropsWithChildren<PostDetailProps>> = ({ params }) =>
 
   useEffect(() => {
     getUserByPost();
-  }, [post.userId]);
+  }, [getUserByPost]);
 
   useEffect(() => {
     getData();

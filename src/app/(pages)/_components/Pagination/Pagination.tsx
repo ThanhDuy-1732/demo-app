@@ -22,7 +22,7 @@ const TotalItem: React.FC<PropsWithChildren<{ total: number }>> = ({ total }) =>
 }
 
 const PaginationCustom: React.FC<PropsWithChildren<PaginationCustomProps>> = ({ total, limit, skip, changePage }) => {
-  const defaultCurrent = useMemo(() => {
+  const defaultCurrent: number = useMemo(() => {
     if (!limit) {
       return 1;
     }

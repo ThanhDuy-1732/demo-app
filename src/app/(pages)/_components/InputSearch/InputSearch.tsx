@@ -6,17 +6,17 @@ import { AutoComplete, AutoCompleteProps, GetProps, Input } from "antd";
 
 type InputSearchProps = {
   defaultValue?: string,
-  submit: (search: string) => Promise<void>,
+  submit: (search: string) => void,
   searchOption: (keyword: string) => Promise<Array<string>>
 }
 
 type SearchProps = GetProps<typeof Input.Search>;
 
 const InputSearch: React.FC<PropsWithChildren<InputSearchProps>> = ({ submit, defaultValue, searchOption }) => {
-  const [timer, setTimer] = useState<any>(null);
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const [options, setOptions] = useState<AutoCompleteProps['options']>([]);
 
-  const handleSearchOption = useCallback(async (value: string) => {
+  const handleSearchOption = useCallback((value: string): void => {
     if (timer) {
       clearTimeout(timer);
     }
@@ -34,7 +34,7 @@ const InputSearch: React.FC<PropsWithChildren<InputSearchProps>> = ({ submit, de
     }, 300));
   }, [searchOption, timer]);
 
-  const handleSearch: SearchProps['onSearch'] = useCallback((value: string, event: any, info: any) => {
+  const handleSearch: SearchProps['onSearch'] = useCallback((value: string, event: any, info: any): void => {
     if (event.code === 'Enter') {
       handleSearchOption(value);
       return;
@@ -43,7 +43,7 @@ const InputSearch: React.FC<PropsWithChildren<InputSearchProps>> = ({ submit, de
     submit(value.trim());
   }, [handleSearchOption, submit]);
 
-  const handleSelectClick = useCallback((value: string) => {
+  const handleSelectClick = useCallback((value: string): void => {
     submit(value.trim());
   }, [submit]);
 

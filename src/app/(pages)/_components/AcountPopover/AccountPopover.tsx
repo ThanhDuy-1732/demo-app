@@ -28,7 +28,7 @@ const AvatarImage: React.FC<PropsWithChildren<AvatarImageProps>> = ({ url }) => 
   const [avatarProps, setAvatarProps] = useState<AvatarProps | {}>({});
 
   useEffect(() => {
-    const props = { size: 'large' };
+    const props: AvatarProps = { size: 'large' };
 
     if (url) {
       setAvatarProps({

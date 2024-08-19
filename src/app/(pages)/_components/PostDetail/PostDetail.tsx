@@ -46,12 +46,12 @@ export const Author:React.FC<PropsWithChildren<{ author: UserData, myId: number 
 export const Action: React.FC<PropsWithChildren<{ count: number, icon: ReactNode }>> = ({ count, icon }) => {
   const setMessage = useAlertStore((state) => state.addMessage);
 
-  const handleActionClick = useCallback(() => {
+  const handleActionClick = useCallback((): void => {
     setMessage({
       type: MessageType.warning,
       message: 'The feature is developing',
     })
-  }, []);
+  }, [setMessage]);
 
   return (
     <Button type="text" className="h-fit w-fit" onClick={handleActionClick}>
@@ -66,11 +66,11 @@ const PostDetail: React.FC<PropsWithChildren<PostDetailProps>> = ({ post, user, 
   const router = useRouter();
   const myId = useAuthStore((state) => state.getMyId);
 
-  const handleBackClick = useCallback(() => {
+  const handleBackClick = useCallback((): void => {
     router.back();
   }, [router]);
 
-  const handleSaveComment = useCallback((content: string) => {
+  const handleSaveComment = useCallback((content: string): void => {
     saveComment(content, post.id);
   }, [post.id, saveComment]);
 

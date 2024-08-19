@@ -7,10 +7,6 @@ import { Form, Input } from "antd";
 const TooltipPassword: React.FC = () => {
   const rules = useMemo(() => ([
     'At 8-20 characters',
-    // 'At least 01 uppercase letter (A-Z)',
-    // 'At least 01 lowercase letter (a-z)',
-    // 'At least 01 digit (0-9)',
-    // 'At least 01 special character',
   ]), []);
 
   return (

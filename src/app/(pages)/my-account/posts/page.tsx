@@ -23,7 +23,7 @@ const MyPosts: React.FC = () => {
   const setMessage = useAlertStore((state) => state.addMessage);
   const setLoading = useLoadingStore((state) => state.setLoading);
 
-  const getData = useCallback(async (data: SearchPosts = {}) => {
+  const getData = useCallback(async (data: SearchPosts = {}): Promise<void> => {
     try {
       setLoading(true);
 
@@ -47,17 +47,17 @@ const MyPosts: React.FC = () => {
     }
   }, [setLoading, getPosts, setMessage, userId]);
 
-  useEffect(() => {
-    getData();
-  }, [getData]);
-
-  const handleChangePage = useCallback(({ limit, skip }: { limit: number, skip: number }) => {
+  const handleChangePage = useCallback(({ limit, skip }: { limit: number, skip: number }): void => {
     getData({ limit, skip });
   }, [getData]);
 
-  const handleGoToDetail = useCallback((id: number) => {
+  const handleGoToDetail = useCallback((id: number): string => {
     return `/my-account/posts/${id}`;
   }, []);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
 
   return (
     <>

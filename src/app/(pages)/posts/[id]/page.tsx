@@ -46,53 +46,44 @@ const PostDetail: React.FC<PropsWithChildren<PostDetailProps>> = ({ params }) =>
     }
   }, [comments])
 
-  const getUserByPost = useCallback(() => {
-    if (!post?.userId) {
-      return;
-    }
+  const getUserByPost = useCallback(async (): Promise<void> => {
+    try {
+      if (!post?.userId) {
+        return;
+      }
 
-    const commonAPI = new CommonAPI();
-    commonAPI.getUserById(post?.userId).then((response) => {
+      const commonAPI = new CommonAPI();
+      const response = await commonAPI.getUserById(post?.userId)
       setUser(() => response.data);
-    }).catch((error: any) => {
+    } catch (error: any) {
       setMessage(error.message);
-    });
+    }
   }, [post.userId]);
 
-  const getCommentWithPageChange = useCallback(({ limit, skip }: { limit: number, skip: number }) => {
+  const getCommentWithPageChange = useCallback(({ limit, skip }: { limit: number, skip: number }): void => {
     setComments({
       limit,
       skip,
     })
   }, [setComments]);
 
-  const getComments = useCallback(({ limit, skip }: { limit: number, skip: number }) => {
-    getCommentsByPost(
-      Number(id), 
-      { skip, limit }
-    )
-
-    return;
-  }, [getCommentsByPost, id]);
-
   const getData = useCallback(async () => {
     try {
       setLoading(true);
       await getPost(Number(id));
-      getComments({
-        skip: DEFAULT_SKIP_PAGE,
-        limit: DEFAULT_LIMIT_PAGE,
-      })
+      getCommentsByPost(
+        Number(id),
+        {
+          skip: DEFAULT_SKIP_PAGE,
+          limit: DEFAULT_LIMIT_PAGE,
+        }
+      )
     } catch (error: any) {
       setMessage(error.message);
     } finally {
       setLoading(false);
     }
-  }, [getPost, id, setLoading, setMessage])
-
-  useEffect(() => {
-    getUserByPost();
-  }, [post.userId]);
+  }, [getPost, id, setLoading, setMessage, getCommentsByPost]);
 
   const handleSaveComment = useCallback((content: string, postId: number) => {
     saveComment({
@@ -106,6 +97,10 @@ const PostDetail: React.FC<PropsWithChildren<PostDetailProps>> = ({ params }) =>
       }
     })
   }, [saveComment, me]);
+
+  useEffect(() => {
+    getUserByPost();
+  }, [post.userId]);
 
   useEffect(() => {
     getData();

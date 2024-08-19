@@ -29,7 +29,7 @@ export default function PostLayout({
   const setMessage = useAlertStore((state) => state.addMessage);
   const setLoading = useLoadingStore((state) => state.setLoading);
 
-  const handleSearch = useCallback(async (keyword: string) => {
+  const handleSearch = useCallback(async (keyword: string): Promise<void> => {
     try {
       setLoading(true);
 

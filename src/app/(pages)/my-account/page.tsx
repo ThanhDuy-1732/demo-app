@@ -36,7 +36,7 @@ const MyAccount: React.FC = () => {
     ]
   }, []);
 
-  const handleLogout = useCallback(() => {
+  const handleLogout = useCallback((): void => {
     Modal.confirm({
       title: 'Log out',
       content: 'Are you sure you want to log out?',

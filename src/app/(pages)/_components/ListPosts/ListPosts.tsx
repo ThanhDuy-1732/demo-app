@@ -18,7 +18,7 @@ const ListPost: React.FC<PropsWithChildren<ListPostProps>> = ({ data, search, go
 
   const posts = useMemo(() => data.posts || [], [data]);
 
-  const handleChangePage = useCallback(({ limit, skip }: { limit: number, skip: number }) => {
+  const handleChangePage = useCallback(({ limit, skip }: { limit: number, skip: number }): void => {
     search({ limit, skip })
   }, [search]);
 

@@ -26,7 +26,7 @@ const Posts: React.FC = () => {
   const setMessage = useAlertStore((state) => state.addMessage);
   const setLoading = useLoadingStore((state) => state.setLoading);
 
-  const getData = useCallback(async (data: SearchPosts = {}) => {
+  const getData = useCallback(async (data: SearchPosts = {}): Promise<void> => {
     try {
       setLoading(true);
 
@@ -51,26 +51,26 @@ const Posts: React.FC = () => {
     }
   }, [setLoading, getPosts, setMessage]);
 
-  useEffect(() => {
-    const query: any = {};
-    (param.entries() || []).forEach(([key, value]) => query[key as string] = value);
-    getData(query);
-  }, [getData]);
-
-  const handleSearch = useCallback((sortBy: string, order: OrderEnum) => {
+  const handleSearch = useCallback((sortBy: string, order: OrderEnum): void => {
     getData({
       sortBy,
       order,
     })
   }, [getData]);
 
-  const handleChangePage = useCallback(({ limit, skip }: { limit: number, skip: number }) => {
+  const handleChangePage = useCallback(({ limit, skip }: { limit: number, skip: number }): void => {
     getData({ limit, skip });
   }, [getData]);
 
-  const handleGoToDetail = useCallback((id: number) => {
+  const handleGoToDetail = useCallback((id: number): string => {
     return `/posts/${id}`;
   }, []);
+
+  useEffect(() => {
+    const query: any = {};
+    (param.entries() || []).forEach(([key, value]) => query[key as string] = value);
+    getData(query);
+  }, [getData]);
 
   return (
     <>
