@@ -4,6 +4,7 @@ import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "re
 
 // Stores
 import usePostStore from "../_services/post.store";
+import useAuthStore from '@/app/(auth)/_services/auth.store';
 import useAlertStore from "@/components/Alert/services/alert.store";
 import useLoadingStore from "@/components/Loading/services/loading.store";
 
@@ -12,6 +13,7 @@ import { Skeleton } from "antd";
 import Detail from '@/app/(pages)/_components/PostDetail/PostDetail';
 
 // APIs
+import { MeData } from '@/app/(auth)/_services/auth.http';
 import { CommentsData, PostData } from "../_services/post.api";
 import CommonAPI, { UserData } from "@/services/http/common.http";
 
@@ -29,10 +31,20 @@ const PostDetail: React.FC<PropsWithChildren<PostDetailProps>> = ({ params }) =>
   const [user, setUser] = useState<UserData | {}>({});
   const getPost = usePostStore((state) => state.getPost);
   const setMessage = useAlertStore((state) => state.addMessage);
+  const setComments = usePostStore((state) => state.setComments);
+  const saveComment = usePostStore((state) => state.saveComment);
+  const me: MeData = useAuthStore((state) => state.me as MeData);
   const setLoading = useLoadingStore((state) => state.setLoading);
   const post: PostData = usePostStore((state) => state.post as PostData);
   const getCommentsByPost = usePostStore((state) => state.getCommentsByPost);
   const comments: CommentsData = usePostStore((state) => state.comments as CommentsData);
+
+  const commentData: CommentsData = useMemo(() => {
+    return {
+      ...comments,
+      comments: (comments.comments || []).slice(comments.skip, comments.limit + comments.skip),
+    }
+  }, [comments])
 
   const getUserByPost = useCallback(() => {
     if (!post?.userId) {
@@ -47,11 +59,21 @@ const PostDetail: React.FC<PropsWithChildren<PostDetailProps>> = ({ params }) =>
     });
   }, [post.userId]);
 
+  const getCommentWithPageChange = useCallback(({ limit, skip }: { limit: number, skip: number }) => {
+    setComments({
+      limit,
+      skip,
+    })
+  }, [setComments]);
+
   const getComments = useCallback(({ limit, skip }: { limit: number, skip: number }) => {
     getCommentsByPost(
       Number(id), 
-      { skip, limit })
-  }, [getCommentsByPost])
+      { skip, limit }
+    )
+
+    return;
+  }, [getCommentsByPost, id]);
 
   const getData = useCallback(async () => {
     try {
@@ -72,6 +94,19 @@ const PostDetail: React.FC<PropsWithChildren<PostDetailProps>> = ({ params }) =>
     getUserByPost();
   }, [post.userId]);
 
+  const handleSaveComment = useCallback((content: string, postId: number) => {
+    saveComment({
+      body: content,
+      likes: 0,
+      postId,
+      user: {
+        id: me.id,
+        username: me.username,
+        fullName: `${me.firstName} ${me.lastName}`,
+      }
+    })
+  }, [saveComment, me]);
+
   useEffect(() => {
     getData();
   }, [getData]);
@@ -82,7 +117,7 @@ const PostDetail: React.FC<PropsWithChildren<PostDetailProps>> = ({ params }) =>
         {
           post.id ?
           (
-            <Detail post={post} user={user as UserData} showComment={true} comments={comments} getComment={getComments} />
+            <Detail post={post} user={user as UserData} showComment={true} comments={commentData} getComment={getCommentWithPageChange} saveComment={handleSaveComment} />
           ) : (
             <Skeleton />
           )

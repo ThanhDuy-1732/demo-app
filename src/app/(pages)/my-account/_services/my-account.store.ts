@@ -2,7 +2,7 @@
 import { create } from "zustand"
 
 // APIs
-import PostAPI, { CommentsData, CommentsQuery, PostData, PostsData, SearchPosts } from "@/app/(pages)/posts/_services/post.api";
+import PostAPI, { CommentData, CommentsData, CommentsQuery, PostData, PostsData, SearchPosts } from "@/app/(pages)/posts/_services/post.api";
 
 // Constants
 import { DEFAULT_LIMIT_PAGE, DEFAULT_SKIP_PAGE } from "@/services/constants"
@@ -25,6 +25,7 @@ export type AccountAction = {
   setPost: (post: AccountState['post']) => void,
   setPosts: (posts: AccountState['posts']) => void,
   setFilter: (filter: AccountState['filter']) => void,
+  saveComment: (comment: Omit<CommentData, 'id'>) => void,
   setComments: (comments: AccountState['comments']) => void,
   getPosts: (filter?: AccountState['filter']) => Promise<void>,
   getCommentsByPost: (id: number, query: CommentsQuery) => Promise<void>,
@@ -44,7 +45,7 @@ const useAccountStore = create<AccountState & AccountAction>((set, get) => {
   }
 
   const setComments = (comments: AccountState['comments']) => {
-    set(() => ({ comments }));
+    set((state) => ({ comments: { ...state.comments, ...comments } }));
   };
 
   const setUserId = (userId: number) => (set(() => ({ userId })));
@@ -80,7 +81,25 @@ const useAccountStore = create<AccountState & AccountAction>((set, get) => {
   const getCommentsByPost = async (id: number, query: CommentsQuery) => {
     const api = new PostAPI();
     const response = await api.getCommentByPost(id, query);
-    setComments(response?.data);
+    setComments({
+      ...response?.data,
+      limit: DEFAULT_LIMIT_PAGE,
+    });
+  }
+
+  const saveComment = (comment: Omit<CommentData, 'id'>) => {
+    const data: CommentsData = (get().comments as CommentsData);
+    const comments = data.comments;
+
+    comments.unshift({
+      ...comment,
+      id: Number(data.total || 0),
+    });
+    setComments({
+      ...get().comments,
+      comments,
+      total: Number(data.total || 0) + 1,
+    })
   }
   
   return {
@@ -100,6 +119,7 @@ const useAccountStore = create<AccountState & AccountAction>((set, get) => {
     getPosts,
     setUserId,
     setFilter,
+    saveComment,
     setComments,
     getCommentsByPost,
   }

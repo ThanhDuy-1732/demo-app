@@ -1,9 +1,6 @@
 'use client';
 // Utilities
-import { useCallback, useMemo } from "react";
-
-// Stores
-import useAlertStore, { MessageType } from "@/components/Alert/services/alert.store";
+import { PropsWithChildren, useCallback, useMemo } from "react";
 
 // Components
 import { Button, Form, Input } from "antd";
@@ -12,18 +9,19 @@ type CommentValues = {
   content: string;
 }
 
-const AddComment: React.FC = () => {
+type AddCommentProps = {
+  saveComment: (comment: string) => void;
+}
+
+const AddComment: React.FC<PropsWithChildren<AddCommentProps>> = ({ saveComment }) => {
   const [form] = Form.useForm();
   const values: CommentValues = Form.useWatch([], form);
-  const setMessage = useAlertStore((state) => state.addMessage);
   const hasContent: boolean = useMemo(() => !!values?.content?.length, [values]);
 
   const handleAddCommentClick = useCallback(() => {
-    setMessage({
-      type: MessageType.warning,
-      message: 'The feature is developing',
-    })
-  }, [setMessage]);
+    saveComment(values.content);
+    form.resetFields();
+  }, [saveComment, values, form]);
 
   return (
     <Form form={form} name="form" className="flex flex-row gap-2" onFinish={handleAddCommentClick}>

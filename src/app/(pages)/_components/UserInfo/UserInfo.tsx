@@ -1,8 +1,8 @@
 // Utilities
 import Link from "next/link";
 import { AxiosResponse } from "axios";
-import { PropsWithChildren, useCallback, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { PropsWithChildren, useCallback, useMemo } from "react";
 
 // Components
 import { Button, Image, Modal } from "antd";
@@ -26,7 +26,7 @@ const UserInfo: React.FC<PropsWithChildren<UserInfoProps>> = ({ showSearch, sear
   const params = useSearchParams();
   const signOut = useAuthStore((state) => state.signOut);
 
-  const defaultSearchValues = useMemo(() => params.get('keyword') || '', []);
+  const defaultSearchValues = useMemo(() => params.get('keyword') || '', [params]);
 
   const handleSearchPosts = useCallback(async (keyword: string) => {
     search?.(keyword);

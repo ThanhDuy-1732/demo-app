@@ -2,7 +2,7 @@
 import { create } from "zustand"
 
 // APIs
-import PostAPI, { CommentsData, CommentsQuery, PostData, PostsData, SearchPosts } from "./post.api"
+import PostAPI, { CommentData, CommentsData, CommentsQuery, PostData, PostsData, SearchPosts } from "./post.api"
 
 // Constants
 import { DEFAULT_LIMIT_PAGE, DEFAULT_SKIP_PAGE } from "@/services/constants"
@@ -21,6 +21,7 @@ export type PostAction = {
   setPosts: (posts: PostState['posts']) => void,
   setFilter: (filter: PostState['filter']) => void,
   setComments: (comments: PostState['comments']) => void,
+  saveComment: (comment: Omit<CommentData, 'id'>) => void, 
   getPosts: (filter?: PostState['filter']) => Promise<void>,
   getCommentsByPost: (id: number, query: CommentsQuery) => Promise<void>,
 }
@@ -39,7 +40,7 @@ const usePostStore = create<PostState & PostAction>((set, get) => {
   }
 
   const setComments = (comments: PostState['comments']) => {
-    set(() => ({ comments }));
+    set((state) => ({ comments: { ...state.comments, ...comments } }));
   };
 
   const reset = () => {
@@ -72,7 +73,25 @@ const usePostStore = create<PostState & PostAction>((set, get) => {
   const getCommentsByPost = async (id: number, query: CommentsQuery) => {
     const api = new PostAPI();
     const response = await api.getCommentByPost(id, query);
-    setComments(response?.data);
+    setComments({
+      ...response?.data,
+      limit: DEFAULT_LIMIT_PAGE,
+    });
+  }
+
+  const saveComment = (comment: Omit<CommentData, 'id'>) => {
+    const data: CommentsData = (get().comments as CommentsData);
+    const comments = data.comments;
+
+    comments.unshift({
+      ...comment,
+      id: Number(data.total || 0),
+    });
+    setComments({
+      ...get().comments,
+      comments,
+      total: Number(data.total || 0) + 1,
+    })
   }
   
   return {
@@ -90,6 +109,7 @@ const usePostStore = create<PostState & PostAction>((set, get) => {
     setPosts,
     getPosts,
     setFilter,
+    saveComment,
     setComments,
     getCommentsByPost,
   }

@@ -22,6 +22,7 @@ export type PostDetailProps = {
   user: UserData,
   showComment: boolean,
   comments?: CommentsData,
+  saveComment: (comment: string, postId: number) => void,
   getComment: ({ limit, skip }: { limit: number, skip: number }) => void,
 }
 
@@ -61,13 +62,17 @@ export const Action: React.FC<PropsWithChildren<{ count: number, icon: ReactNode
   )
 }
 
-const PostDetail: React.FC<PropsWithChildren<PostDetailProps>> = ({ post, user, showComment, comments = {}, getComment }) => {
+const PostDetail: React.FC<PropsWithChildren<PostDetailProps>> = ({ post, user, showComment, comments = {}, getComment, saveComment }) => {
   const router = useRouter();
   const myId = useAuthStore((state) => state.getMyId);
 
   const handleBackClick = useCallback(() => {
     router.back();
   }, [router]);
+
+  const handleSaveComment = useCallback((content: string) => {
+    saveComment(content, post.id);
+  }, [post.id, saveComment]);
 
   return (
     <>
@@ -101,7 +106,7 @@ const PostDetail: React.FC<PropsWithChildren<PostDetailProps>> = ({ post, user, 
 
       {
         showComment && (comments as CommentsData)?.comments ?
-        <Comments comments={comments as CommentsData} getComment={getComment} /> :
+        <Comments comments={comments as CommentsData} getComment={getComment} saveComment={handleSaveComment} /> :
         <Skeleton />
       }
     </>

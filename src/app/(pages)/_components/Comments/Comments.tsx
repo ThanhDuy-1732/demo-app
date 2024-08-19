@@ -11,10 +11,11 @@ import PaginationCustom from "../Pagination/Pagination";
 
 export type CommentsProps = {
   comments: CommentsData,
+  saveComment: (comment: string) => void;
   getComment: ({ limit, skip }: { limit: number, skip: number }) => void,
 }
 
-const Comments: React.FC<PropsWithChildren<CommentsProps>> = ({ comments, getComment }) => {
+const Comments: React.FC<PropsWithChildren<CommentsProps>> = ({ comments, getComment, saveComment }) => {
   const handleChangePageComment = useCallback(({ limit, skip }: { limit: number, skip: number }) => {
     getComment({ limit, skip });
   }, []);
@@ -22,7 +23,7 @@ const Comments: React.FC<PropsWithChildren<CommentsProps>> = ({ comments, getCom
   return (
     <>
       <div className="w-full flex flex-col">
-        <AddComment />
+        <AddComment saveComment={saveComment} />
         <ListComments data={comments} />
         <div className="self-end mt-2">
           <PaginationCustom limit={comments.limit} total={comments.total} skip={comments.skip} changePage={handleChangePageComment} />
