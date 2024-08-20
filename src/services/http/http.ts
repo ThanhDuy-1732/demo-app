@@ -23,6 +23,12 @@ export const http = (): AxiosInstance => {
 
   const responseStatusOK = (response: AxiosResponse) => response;
   const responseStatusFailure = (error: AxiosError<{ message: string }>) => {
+    if (error.response?.status === 401) {
+      if (error.config?.url !== '/auth/me') {
+        window.location.href = '/login';
+        localStorage.clear();
+      }
+    }
     throw new Error(error.response?.data?.message || '');
   }
 

@@ -22,6 +22,10 @@ export default function AuthLayout({
     resetMessage();
   }, [pathName, resetMessage]);
 
+  useEffect(() => {
+    localStorage.clear();
+  }, [])
+
   return (
     <>
       <CustomAlert />
