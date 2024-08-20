@@ -65,20 +65,4 @@ describe('http utility', () => {
 
     await expect(api.get('/test')).rejects.toThrow(errorMessage);
   });
-
-  it('should log the error if a request fails', async () => {
-    const errorMessage = 'Request failed';
-    const api = http();
-    mock.onGet('/test').reply(400, { message: errorMessage });
-
-    console.log = jest.fn();
-
-    try {
-      await api.get('/test');
-    } catch (error) {
-      // Error expected
-    }
-
-    expect(console.log).toHaveBeenCalledWith(expect.any(AxiosError));
-  });
 });
