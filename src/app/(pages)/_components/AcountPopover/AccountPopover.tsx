@@ -60,9 +60,14 @@ const Account: React.FC = () => {
     router.push('/my-account/posts')
   }, [router]);
 
+  const handleGoToHomeClick = useCallback(() => {
+    router.push('/posts')
+  }, [router]);
+
   return (
     <>
       <div className="flex flex-col gap-2">
+        <Button type="dashed" onClick={handleGoToHomeClick}>Home</Button>
         <Button type="dashed" onClick={handleViewProfileClick}>View Profile</Button>
         <Button type="dashed" onClick={handleMyPostsClick}>My posts</Button>
       </div>

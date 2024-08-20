@@ -29,8 +29,8 @@ const Content: React.FC<PropsWithChildren<PostProps>> = ({ post, goTo }) => {
     <>
       <div className="w-full p-3 rounded-xl border-zinc-300 border-2 flex flex-col gap-2">
         <div className="text-center font-semibold text-lg">{ post.title }</div>
-        <div className="flex justify-between items-center">
-          <div className="flex gap-2 items-center">
+        <div className="flex flex-col-reverse lg:flex-row items-start justify-between lg:items-center">
+          <div className="hidden lg:flex gap-2 items-center">
             <div>{ formatNumber(post.views) } <EyeOutlined /></div>
             <div>{ formatNumber(post?.reactions?.likes) } <LikeOutlined /></div>
           </div>

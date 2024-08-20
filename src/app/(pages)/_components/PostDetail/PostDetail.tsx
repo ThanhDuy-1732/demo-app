@@ -78,7 +78,7 @@ const PostDetail: React.FC<PropsWithChildren<PostDetailProps>> = ({ post, user, 
     <>
       <div className="flex flex-col items-start gap-2 lg:gap-0 lg:flex-row lg:items-center">
         <Button icon={<LeftOutlined />} onClick={handleBackClick}><div className="hidden lg:block">Back</div></Button>
-        <div className="flex-1 lg:pr-[2rem] text-center text-xl font-semibold">{ post?.title }</div>
+        <div className="flex-1 self-center lg:pr-[2rem] text-center text-xl font-semibold">{ post?.title }</div>
       </div>
 
       <div className="flex flex-col gap-2 mt-2 border-2 border-gray-300 p-2 rounded-xl">

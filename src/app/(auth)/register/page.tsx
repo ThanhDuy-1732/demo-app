@@ -99,7 +99,7 @@ export default function Register() {
         }
 
         <Form.Item className='text-center'>
-          <SubmitButton className='w-80 min-w-60' form={form}>Register</SubmitButton>
+          <SubmitButton className='w-60 lg-80 min-w-60' form={form}>Register</SubmitButton>
         </Form.Item>
       </Form>
       <div className='flex gap-1 items-center'>
