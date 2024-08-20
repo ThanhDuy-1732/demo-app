@@ -30,7 +30,7 @@ const CustomAlert: React.FC = () => {
   return (
     <div className="absolute top-4 right-0 flex flex-col gap-2 z-20">
       {
-        messages.map((message) => {
+        (messages || []).map((message) => {
           return (
             <Message key={message.id} {...message} handleMessageCloseClick={handleMessageCloseClick} />
           )

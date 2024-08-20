@@ -23,7 +23,6 @@ export const http = (): AxiosInstance => {
 
   const responseStatusOK = (response: AxiosResponse) => response;
   const responseStatusFailure = (error: AxiosError<{ message: string }>) => {
-    console.log(error);
     throw new Error(error.response?.data?.message || '');
   }
 

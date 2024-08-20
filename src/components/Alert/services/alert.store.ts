@@ -14,11 +14,11 @@ export type Message = {
   type: MessageType,
 }
 
-type AlertState = {
+export type AlertState = {
   messages: Message[],
 }
 
-type AlertAction = {
+export type AlertAction = {
   reset: () => void,
   deleteMessage: (id: string) => void,
   addMessage: (data: Omit<Message, 'id'>) => void,
