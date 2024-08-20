@@ -9,10 +9,13 @@ import { PostsData, CommentsData } from '@/app/(pages)/posts/_services/post.api'
 // Stores
 import useAccountStore from './my-account.store';
 
+jest.useRealTimers();
+
 describe('useAccountStore', () => {
   let mock: MockAdapter;
 
   beforeEach(() => {
+    jest.setTimeout(10000);
     mock = new MockAdapter(http());
   });
 

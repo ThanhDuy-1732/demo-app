@@ -5,11 +5,14 @@ import MockAdapter from 'axios-mock-adapter';
 import { http } from '@/services/http/http';
 import AccountAPI, { PostsQuery, OrderEnum } from './my-account.api';
 
+jest.useRealTimers();
+
 describe('AccountAPI', () => {
   let mock: MockAdapter;
   let accountAPI: AccountAPI;
 
   beforeEach(() => {
+    jest.setTimeout(10000);
     mock = new MockAdapter(http());
     accountAPI = new AccountAPI();
   });

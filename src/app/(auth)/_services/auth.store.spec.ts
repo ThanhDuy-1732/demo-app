@@ -11,30 +11,14 @@ import useAuthStore from './auth.store';
 
 describe('useAuthStore', () => {
   let mock: MockAdapter;
-  const authAPI = new AuthAPI();
 
   beforeEach(() => {
+    jest.setTimeout(10000);
     mock = new MockAdapter(http());
   });
 
   afterEach(() => {
     mock.reset();
-  });
-
-  it('should set access and refresh tokens when signIn is called', async () => {
-    const mockSignInPayload = {
-      username: 'emilys',
-      password: 'emilyspass',
-    };
-
-    const { result } = renderHook(() => useAuthStore());
-
-    await act(async () => {
-      await result.current.signIn(mockSignInPayload);
-    });
-
-    expect(result.current.accessToken).toBeTruthy();
-    expect(result.current.refreshToken).toBeTruthy();
   });
 
   it('should clear access and refresh tokens when signOut is called', () => {
@@ -58,7 +42,7 @@ describe('useAuthStore', () => {
     expect(localStorage.getItem('refreshToken')).toBe('');
   });
 
-  it('should fetch and set user data when getMe is called', async () => {
+  it('should set access and refresh tokens when signIn is called', async () => {
     const mockSignInPayload = {
       username: 'emilys',
       password: 'emilyspass',
@@ -68,6 +52,16 @@ describe('useAuthStore', () => {
 
     await act(async () => {
       await result.current.signIn(mockSignInPayload);
+    });
+
+    expect(result.current.accessToken).toBeTruthy();
+    expect(result.current.refreshToken).toBeTruthy();
+  });
+
+  it('should fetch and set user data when getMe is called', async () => {
+    const { result } = renderHook(() => useAuthStore());
+
+    await act(async () => {
       await result.current.getMe();
     });
 

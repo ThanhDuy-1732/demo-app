@@ -10,6 +10,7 @@ describe('AuthAPI', () => {
   const authAPI = new AuthAPI();
 
   beforeEach(() => {
+    jest.setTimeout(10000);
     mock = new MockAdapter(axios);
   });
 

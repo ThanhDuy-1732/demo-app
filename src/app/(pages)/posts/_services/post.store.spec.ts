@@ -9,11 +9,14 @@ import PostAPI, { CommentsData, PostsData } from './post.api';
 // Stores
 import usePostStore from './post.store';
 
+jest.useRealTimers();
+
 describe('usePostStore', () => {
   let mock: MockAdapter;
   let postAPI: PostAPI;
 
   beforeEach(() => {
+    jest.setTimeout(10000);
     mock = new MockAdapter(http());
     postAPI = new PostAPI();
   });

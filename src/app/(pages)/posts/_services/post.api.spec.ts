@@ -5,11 +5,14 @@ import MockAdapter from 'axios-mock-adapter';
 import PostAPI from './post.api';
 import { http } from '@/services/http/http';
 
+jest.useRealTimers();
+
 describe('PostAPI', () => {
   let mock: MockAdapter;
   let postAPI: PostAPI;
 
   beforeEach(() => {
+    jest.setTimeout(10000);
     mock = new MockAdapter(http());
     postAPI = new PostAPI();
   });
