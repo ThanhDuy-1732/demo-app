@@ -32,6 +32,7 @@ const PostDetail: React.FC<PropsWithChildren<PostDetailProps>> = ({ params }) =>
   const getPost = usePostStore((state) => state.getPost);
   const setMessage = useAlertStore((state) => state.addMessage);
   const setComments = usePostStore((state) => state.setComments);
+  const getComments = usePostStore((state) => state.getComments);
   const saveComment = usePostStore((state) => state.saveComment);
   const me: MeData = useAuthStore((state) => state.me as MeData);
   const setLoading = useLoadingStore((state) => state.setLoading);
@@ -58,14 +59,15 @@ const PostDetail: React.FC<PropsWithChildren<PostDetailProps>> = ({ params }) =>
     } catch (error: any) {
       setMessage(error.message);
     }
-  }, [post.userId]);
+  }, [post.userId, setMessage]);
 
   const getCommentWithPageChange = useCallback(({ limit, skip }: { limit: number, skip: number }): void => {
     setComments({
+      ...getComments(),
       limit,
       skip,
     })
-  }, [setComments]);
+  }, [setComments, getComments]);
 
   const getData = useCallback(async () => {
     try {
@@ -100,7 +102,7 @@ const PostDetail: React.FC<PropsWithChildren<PostDetailProps>> = ({ params }) =>
 
   useEffect(() => {
     getUserByPost();
-  }, [post.userId]);
+  }, [post.userId, getUserByPost]);
 
   useEffect(() => {
     getData();

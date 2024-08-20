@@ -34,6 +34,7 @@ const PostDetail: React.FC<PropsWithChildren<PostDetailProps>> = ({ params }) =>
   const me: MeData = useAuthStore((state) => state.me as MeData);
   const setLoading = useLoadingStore((state) => state.setLoading);
   const setComments = useAccountStore((state) => state.setComments);
+  const getComments = useAccountStore((state) => state.getComments);
   const saveComment = useAccountStore((state) => state.saveComment);
   const post: PostData = useAccountStore((state) => state.post as PostData);
   const getCommentsByPost = useAccountStore((state) => state.getCommentsByPost);
@@ -64,10 +65,11 @@ const PostDetail: React.FC<PropsWithChildren<PostDetailProps>> = ({ params }) =>
 
   const getCommentWithPageChange = useCallback(({ limit, skip }: { limit: number, skip: number }): void => {
     setComments({
+      ...getComments(),
       limit,
       skip,
     })
-  }, [setComments]);
+  }, [setComments, getComments]);
 
   const getData = useCallback(async () => {
     try {

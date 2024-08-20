@@ -23,6 +23,7 @@ export type AccountAction = {
   setUserId: (userId: number) => void,
   getPost: (id: number) => Promise<void>,
   getFilter: () => AccountState['filter'],
+  getComments: () => AccountState['comments'],
   setPost: (post: AccountState['post']) => void,
   setPosts: (posts: AccountState['posts']) => void,
   setFilter: (filter: AccountState['filter']) => void,
@@ -46,14 +47,16 @@ const useAccountStore = create<AccountState & AccountAction>((set, get) => {
   }
 
   const setComments = (comments: AccountState['comments']) => {
-    set((state) => ({ comments: { ...state.comments, ...comments } }));
+    set(() => ({ comments }));
   };
+
+  const getComments = () => get().comments;
 
   const setUserId = (userId: number) => (set(() => ({ userId })));
 
   const reset = () => {
     setPost({});
-    setPosts([]);
+    setPosts({});
     setUserId(0);
     setFilter({});
     setComments({});
@@ -123,6 +126,7 @@ const useAccountStore = create<AccountState & AccountAction>((set, get) => {
     getFilter,
     setUserId,
     setFilter,
+    getComments,
     saveComment,
     setComments,
     getCommentsByPost,

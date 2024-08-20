@@ -18,6 +18,7 @@ export type PostAction = {
   reset: () => void,
   getFilter: () => PostState['filter'],
   getPost: (id: number) => Promise<void>,
+  getComments: () => PostState['comments'],
   setPost: (post: PostState['post']) => void,
   setPosts: (posts: PostState['posts']) => void,
   setFilter: (filter: PostState['filter']) => void,
@@ -41,12 +42,14 @@ const usePostStore = create<PostState & PostAction>((set, get) => {
   }
 
   const setComments = (comments: PostState['comments']) => {
-    set((state) => ({ comments: { ...state.comments, ...comments } }));
+    set(() => ({ comments }));
   };
+
+  const getComments = () => get().comments;
 
   const reset = () => {
     setPost({});
-    setPosts([]);
+    setPosts({});
     setFilter({});
     setComments({});
   }
@@ -113,6 +116,7 @@ const usePostStore = create<PostState & PostAction>((set, get) => {
     getPosts,
     getFilter,
     setFilter,
+    getComments,
     saveComment,
     setComments,
     getCommentsByPost,
