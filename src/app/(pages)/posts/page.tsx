@@ -68,7 +68,10 @@ const Posts: React.FC = () => {
 
   useEffect(() => {
     const query: any = {};
-    (param.entries() || []).forEach(([key, value]) => query[key as string] = value);
+    for (const [key, value] of param.entries()) {
+      query[key as string] = value
+    }
+    
     getData(query);
   }, [getData, param]);
 
