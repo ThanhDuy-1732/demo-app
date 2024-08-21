@@ -1,6 +1,6 @@
 'use client';
 // Utilities
-import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 // Stores
 import useAuthStore from "@/app/(auth)/_services/auth.store";
@@ -27,7 +27,7 @@ type PostDetailProps = {
   };
 }
 
-const PostDetail: React.FC<PropsWithChildren<PostDetailProps>> = ({ params }) => {
+const PostDetail = ({ params }: PostDetailProps) => {
   const [user, setUser] = useState<UserData | {}>({});
   const getPost = useAccountStore((state) => state.getPost);
   const setMessage = useAlertStore((state) => state.addMessage);
