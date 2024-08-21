@@ -16,6 +16,9 @@ import useAlertStore, { MessageType } from "@/components/Alert/services/alert.st
 import { OrderEnum, PostsData, SearchPosts } from "./_services/post.api";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
+// Constants
+import { DEFAULT_LIMIT_PAGE } from "@/services/constants";
+
 const Posts: React.FC = () => {
   const router = useRouter();
   const pathName = usePathname();
@@ -72,7 +75,11 @@ const Posts: React.FC = () => {
       query[key as string] = value
     }
     
-    getData(query);
+    getData({
+      skip: 0,
+      limit: DEFAULT_LIMIT_PAGE,
+      ...query
+    });
   }, [getData, param]);
 
   return (

@@ -15,6 +15,9 @@ import useAlertStore, { MessageType } from "@/components/Alert/services/alert.st
 import { PostsData } from "../_services/my-account.api";
 import { SearchPosts } from "../../posts/_services/post.api";
 
+// Constants
+import { DEFAULT_LIMIT_PAGE } from "@/services/constants";
+
 const MyPosts: React.FC = () => {
   const posts = useAccountStore((state) => state.posts);
   const userId = useAccountStore((state) => state.userId);
@@ -56,7 +59,10 @@ const MyPosts: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    getData();
+    getData({
+      skip: 0,
+      limit: DEFAULT_LIMIT_PAGE,
+    });
   }, [getData]);
 
   return (
