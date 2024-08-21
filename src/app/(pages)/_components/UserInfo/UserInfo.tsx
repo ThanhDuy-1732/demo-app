@@ -61,11 +61,16 @@ const UserInfo: React.FC<PropsWithChildren<UserInfoProps>> = ({ showSearch, sear
     }
   }, []);
 
+  const handleHomeImageClick = useCallback((): void => {
+    resetPost();
+    router.push('/posts');
+  }, [resetPost, router]);
+
   return (
     <>
       <div className="sticky top-0 bg-gray-300 flex justify-between items-center gap-2 py-2 lg:py-0 z-10">
         <div className="flex-1 lg:flex items-center hidden">
-          <Link href={'/posts'} className="w-fit h-[50px]">
+          <Link href={'/#'} className="w-fit h-[50px]" type="text" onClick={handleHomeImageClick}>
             <Image
               height={50}
               alt="Avatar"

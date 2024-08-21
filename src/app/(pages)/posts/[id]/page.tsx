@@ -1,6 +1,6 @@
 'use client';
 // Utilities
-import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 // Stores
 import usePostStore from "../_services/post.store";
@@ -26,7 +26,7 @@ type PostDetailProps = {
   };
 }
 
-const PostDetail: React.FC<PropsWithChildren<PostDetailProps>> = ({ params }) => {
+const PostDetail = ({ params }: PostDetailProps) => {
   const id = useMemo(() => params.id, [params]);
   const [user, setUser] = useState<UserData | {}>({});
   const getPost = usePostStore((state) => state.getPost);
