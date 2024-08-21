@@ -7,6 +7,8 @@ import { useCallback, useMemo } from "react";
 import { MeData } from "@/app/(auth)/_services/auth.http";
 
 // Stores
+import usePostStore from "../posts/_services/post.store";
+import useAccountStore from "./_services/my-account.store";
 import useAuthStore from "@/app/(auth)/_services/auth.store";
 
 // Components
@@ -21,7 +23,9 @@ export type Data = {
 const MyAccount: React.FC = () => {
   const router = useRouter();
   const signOut = useAuthStore((state) => state.signOut);
+  const resetPost = usePostStore((state) => state.reset);
   const me: MeData = useAuthStore((state) => state.me as MeData);
+  const resetPostByAccount = useAccountStore((state) => state.reset);
   const fullName: string = useMemo(() => `${me.firstName} ${me.lastName}`, [me.firstName, me.lastName]);
   
   const dataList: Array<Data> = useMemo(() => {
@@ -43,9 +47,11 @@ const MyAccount: React.FC = () => {
       onOk: () => {
         router.push('/login');
         signOut();
+        resetPost();
+        resetPostByAccount();
       }
     })
-  }, [])
+  }, [router, signOut, resetPost, resetPostByAccount]);
 
   return (
     <>
@@ -64,7 +70,7 @@ const MyAccount: React.FC = () => {
                   }
 
                   if (value.name === 'Name') {
-                    return <div>Name: {fullName}</div>
+                    return <div key={`${value}-${index}`}>Name: {fullName}</div>
                   }
                 })
               }

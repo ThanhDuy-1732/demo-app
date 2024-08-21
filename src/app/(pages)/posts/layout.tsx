@@ -57,7 +57,7 @@ export default function PostLayout({
     } finally {
       setLoading(false);
     }
-  }, [])
+  }, [getPosts, pathName, setMessage, setLoading, router]);
 
   return (
     <>

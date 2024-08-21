@@ -17,6 +17,8 @@ import useAlertStore, { MessageType } from '@/components/Alert/services/alert.st
 
 // APIs
 import { SignInPayload } from '../_services/auth.http';
+import usePostStore from '@/app/(pages)/posts/_services/post.store';
+import useAccountStore from '@/app/(pages)/my-account/_services/my-account.store';
 
 type FormValues = {
   username: string,
@@ -27,8 +29,10 @@ export default function Login() {
   const router = useRouter();
   const [form] = Form.useForm();
   const signIn = useAuthStore((state) => state.signIn);
+  const resetPost = usePostStore((state) => state.reset);
   const addMessage = useAlertStore((state) => state.addMessage);
   const setLoading = useLoadingStore((state) => state.setLoading);
+  const resetPostByAccount = useAccountStore((state) => state.reset);
 
   const handleSubmitFormClick = useCallback(async (values: FormValues) => {
     try {
@@ -39,11 +43,14 @@ export default function Login() {
         password: values.password,
       };
 
+      resetPost();
+      resetPostByAccount();
       await signIn(payload);
+      
       addMessage({
         type: MessageType.success,
         message: 'Login successfully!',
-      })
+      });
 
       router.push('/posts');
     } catch (error: any) {
@@ -54,7 +61,7 @@ export default function Login() {
     } finally {
       setLoading(false);
     }
-  }, [addMessage, setLoading, signIn, router]);
+  }, [addMessage, setLoading, signIn, router, resetPost, resetPostByAccount]);
 
   return (
     <div className="flex flex-col items-center w-full">

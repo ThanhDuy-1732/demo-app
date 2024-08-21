@@ -49,7 +49,7 @@ const Posts: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  }, [setLoading, getPosts, setMessage, getFilter]);
+  }, [setLoading, getPosts, setMessage, getFilter, pathName, router]);
 
   const handleSearch = useCallback((sortBy: string, order: OrderEnum): void => {
     getData({
@@ -70,7 +70,7 @@ const Posts: React.FC = () => {
     const query: any = {};
     (param.entries() || []).forEach(([key, value]) => query[key as string] = value);
     getData(query);
-  }, [getData]);
+  }, [getData, param]);
 
   return (
     <>

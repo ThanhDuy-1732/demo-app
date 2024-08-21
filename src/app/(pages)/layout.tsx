@@ -67,7 +67,7 @@ export default function PageLayout({
         type: MessageType.error,
       });
     }
-  }, [router, redirectLogin, setMessage]);
+  }, [router, redirectLogin, setMessage, me]);
 
   useEffect(() => {
     resetMessage();

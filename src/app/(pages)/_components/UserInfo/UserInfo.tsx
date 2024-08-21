@@ -11,7 +11,9 @@ import InputSearch from "../InputSearch/InputSearch";
 import AccountPopover from "../AcountPopover/AccountPopover";
 
 // Stores
+import usePostStore from "../../posts/_services/post.store";
 import useAuthStore from "@/app/(auth)/_services/auth.store";
+import useAccountStore from "../../my-account/_services/my-account.store";
 
 // APIs
 import PostAPI, { SelectPostData } from "../../posts/_services/post.api";
@@ -25,6 +27,8 @@ const UserInfo: React.FC<PropsWithChildren<UserInfoProps>> = ({ showSearch, sear
   const router = useRouter();
   const params = useSearchParams();
   const signOut = useAuthStore((state) => state.signOut);
+  const resetPost = usePostStore((state) => state.reset);
+  const resetPostByAccount = useAccountStore((state) => state.reset);
 
   const defaultSearchValues: string = useMemo(() => params.get('keyword') || '', [params]);
 
@@ -39,9 +43,11 @@ const UserInfo: React.FC<PropsWithChildren<UserInfoProps>> = ({ showSearch, sear
       onOk: () => {
         router.push('/login');
         signOut();
+        resetPost();
+        resetPostByAccount();
       }
     })
-  }, [router, signOut]);
+  }, [router, signOut, resetPost, resetPostByAccount]);
 
   const handleSearchOptions = useCallback(async (keyword: string): Promise<Array<string>> => {
     try {
