@@ -40,6 +40,10 @@ export default function Login() {
       };
 
       await signIn(payload);
+      addMessage({
+        type: MessageType.success,
+        message: 'Login successfully!',
+      })
 
       router.push('/posts');
     } catch (error: any) {
